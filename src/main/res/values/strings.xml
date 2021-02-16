@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">TestApp</string>
     <string name="my_start_button">Start</string>
+    <string name="my_copy_button">Copy Input</string>
+    <string name="my_Started">Started!</string>
     <string name="empty_field">Waiting, push \"Start\"</string>
     <string name="editTextInputIField">Waiting for \"Start\"…</string>
+    <string name="my_Waiting">Waiting input…</string>
+    <string name="textView">Input Field:</string>
+    <string name="textView2">Output Field:</string>
 </resources>
