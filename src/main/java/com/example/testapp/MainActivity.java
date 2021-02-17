@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,13 +49,13 @@ public class MainActivity extends AppCompatActivity {
             inputText.setText("");
             outputText.setText(R.string.my_Waiting);
             started = 1;
-            //buttonText.setText(R.string.my_copy_button);
+            buttonText.setText(R.string.my_copy_button);
         }
         else {
             System.out.println("Button clicked!");
             switch (started) {
                 case 1:
-                    //writeOutput();
+                    writeOutput();
                     String text = inputText.getText().toString();
                     outputText.setText(text);
                     System.out.println(text);
@@ -68,6 +69,17 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         }
+    }
+
+    public void readScannerInput() {
+        Scanner scan;
+        scan = new Scanner(System.in);
+        while ( scan.hasNextLine() ) {
+            String text = inputText.getText().toString();
+            outputText.setText(text);
+            System.out.println(text);
+        }
+
     }
 
     public void readInput() {
