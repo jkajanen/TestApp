@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -19,10 +22,11 @@ import java.util.Scanner;
 public class MainActivity extends AppCompatActivity {
 
     TextView text;
-    TextView inputText;
+    EditText inputText;
     TextView outputText;
     TextView buttonText;
     int started = 0;
+    int i = 0;
 
     Context context = null;
 
@@ -34,10 +38,30 @@ public class MainActivity extends AppCompatActivity {
         context = MainActivity.this;
 
         text = (TextView) findViewById(R.id.myTextView);
-        inputText = (TextView) findViewById(R.id.editTextTextMultiLine);
+        inputText = (EditText) findViewById(R.id.editTextTextMultiLine);
         outputText = (TextView) findViewById(R.id.editTextTextMultiLine2);
         buttonText = (TextView) findViewById(R.id.myButton);
 
+        inputText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                buttonText.setText("Clear Fields");
+                System.out.println("AfterTextChanged");
+                String autotext = inputText.getText().toString();
+                outputText.setText(autotext);
+
+            }
+        });
         System.out.println(context.getFilesDir());
     }
 
@@ -55,15 +79,21 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("Button clicked!");
             switch (started) {
                 case 1:
-                    writeOutput();
-                    String text = inputText.getText().toString();
+                    //writeOutput();
+                    outputText.setText("");
+                    /*String text = inputText.getText().toString();
                     outputText.setText(text);
                     System.out.println(text);
-                    started = 1;
+                    if (++i >= 5) {
+                        buttonText.setText(R.string.my_change_button);
+                        started = 2;
+                        i = 0;
+                    }*/
+                    inputText.setText("");
                     break;
                 case 2:
-                    //readInput();
-                    started = 1;
+                    autoCopy();
+
                     break;
                 default:
                     break;
@@ -71,18 +101,49 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void readScannerInput() {
+    public void autoCopy() {
+        started = 1;
+        //buttonText.setText(R.string.my_copy_button);
+        }
+
+    public void readScannerInput(View v) {
         Scanner scan;
         scan = new Scanner(System.in);
+        System.out.println("In readScannerInput");
         while ( scan.hasNextLine() ) {
+            System.out.println("In readScannerInput loop");
             String text = inputText.getText().toString();
             outputText.setText(text);
             System.out.println(text);
         }
+        scan.close();
 
     }
 
-    public void readInput() {
+    public void readWriteInput(View v) {
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            String inputStr = "";
+            System.out.println("Entered readWriteInput()");
+            /*while (inputStr.equals("")) {
+                inputStr = br.readLine();
+                System.out.println(inputStr);
+                outputText.setText(inputStr);
+
+            }*/
+            inputStr = br.readLine();
+            inputStr = context.getText(R.id.editTextTextMultiLine).toString();
+            System.out.println(inputStr);
+            //inputStr =  inputText.getText().toString();
+            //outputText.setText(inputStr);
+        } catch (IOException e) {
+            Log.e("IOException", "Error in read");
+        } finally {
+            System.out.println("Exiting readWriteInput()");
+        }
+    }
+
+    public void readInput(View v) {
         try {
             InputStream ins = context.openFileInput("test.txt");
 
@@ -91,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
 
             while ((inputStr = br.readLine()) != null ) {
                 System.out.println(inputStr);
-                //outputText.setText(inputStr);
+                outputText.setText(inputStr);
             }
             ins.close();
         } catch (IOException e) {
@@ -101,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void writeOutput() {
+    public void writeOutput(View v) {
         try {
             OutputStreamWriter osw = new OutputStreamWriter(context.openFileOutput("test.txt", Context.MODE_PRIVATE));
 

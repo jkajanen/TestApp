@@ -2,6 +2,7 @@
     <string name="app_name">TestApp</string>
     <string name="my_start_button">Start</string>
     <string name="my_copy_button">Copy Input</string>
+    <string name="my_change_button">Auto Copy</string>
     <string name="my_Started">Started!</string>
     <string name="empty_field">Waiting, push \"Start\"</string>
     <string name="editTextInputIField">Waiting for \"Start\"…</string>
