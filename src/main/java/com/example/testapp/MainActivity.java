@@ -57,9 +57,9 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 buttonText.setText("Clear Fields");
                 System.out.println("AfterTextChanged");
-                String autotext = inputText.getText().toString();
-                outputText.setText(autotext);
-
+                //String autotext = inputText.getText().toString();
+                //outputText.setText(autotext);
+                outputText.setText(inputText.getText().toString());
             }
         });
         System.out.println(context.getFilesDir());
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
     public void readWriteInput(View v) {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            String inputStr = "";
+            String inputStr;
             System.out.println("Entered readWriteInput()");
             /*while (inputStr.equals("")) {
                 inputStr = br.readLine();
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
             }*/
             inputStr = br.readLine();
-            inputStr = context.getText(R.id.editTextTextMultiLine).toString();
+            //inputStr = context.getText(R.id.editTextTextMultiLine).toString();
             System.out.println(inputStr);
             //inputStr =  inputText.getText().toString();
             //outputText.setText(inputStr);
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
             InputStream ins = context.openFileInput("test.txt");
 
             BufferedReader br = new BufferedReader(new InputStreamReader(ins));
-            String inputStr = "";
+            String inputStr;
 
             while ((inputStr = br.readLine()) != null ) {
                 System.out.println(inputStr);
@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             OutputStreamWriter osw = new OutputStreamWriter(context.openFileOutput("test.txt", Context.MODE_PRIVATE));
 
-            String outString = "";
+            String outString;
 
             outString = "Jotain diipadaabaa \nLisää sitä itseään \nja kolmas rivi vielä";
             osw.write(outString);
